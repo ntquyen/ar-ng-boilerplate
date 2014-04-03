@@ -1,0 +1,10 @@
+<div class="panel">
+  <div class="panel-body">
+    <div class="alert alert-warning" ng-bind="error" ng-show="error"></div>
+
+    <div ui-view="main"></div>
+
+    <hr>
+    <div class="btn btn-default" ng-click="goBack()">Back</div>
+  </div>
+</div>

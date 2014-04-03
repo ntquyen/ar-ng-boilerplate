@@ -1,0 +1,58 @@
+<div class="panel panel-primary">
+	<div class="panel panel-heading">Api Key Information</div>
+	<div class="panel panel-body">
+		<div ng-if="loading.agencyLocation">Loading Agency Locations...</div>
+		<div ng-if="!loading.agencyLocation">
+			<div ng-if="!error">
+				<div ng-if="agencyLocations.length > 0">
+					<div class="form-group">
+						<label>Please select a location</label>
+						<select ng-options="agencyLocation.agencyLocationDesc for agencyLocation in agencyLocations" 
+								ng-model="agencyLocation" 
+								ng-change="changeAgencyLocation(agencyLocation)"
+								class="form-control">
+						</select>
+					</div>
+					<div ng-if="agencyLocation">
+						<!--
+						<div class="panel panel-info">
+							<div class="panel-heading">Agency Location Info</div>
+							<div class="panel-body">
+								<div class="form-group">
+						    		<label>Agency Location Name</label>
+						    		<pre ng-bind="agencyLocation.agencyLocationDesc"></pre>
+						  		</div>
+								<div class="form-group">
+						    		<label>Agency Location Key</label>
+						    		<pre ng-bind="agencyLocation.agencyLocationKey"></pre>
+						  		</div>
+								<div class="form-group">
+						    		<label>MoonRay App Id</label>
+						    		<pre ng-bind="agencyLocation.moonrayAppId"></pre>
+						  		</div>
+								<div class="form-group">
+						    		<label>MoonRay Key</label>
+						    		<pre ng-bind="agencyLocation.moonrayKey"></pre>
+						  		</div>
+							</div>
+						</div>
+						<hr>
+						-->
+						<div ng-if="loading.amsTypeLogTypeMap">Loading AMS Type...</div>
+						<div ng-if="!loading.amsTypeLogTypeMap" class="form-group">
+							<label>Please confirm the export system</label>
+							<select ng-options="amsType for amsType in agencyLocation.amsTypes" 
+									ng-model="agencyLocation.exportType"
+									class="form-control">
+							</select>
+						</div>
+					</div>
+					<div ng-if="agencyLocation && agencyLocation.exportType" class="btn btn-primary" ng-click="selectAgencyLocation()">Go</div>
+				</div>
+				<div ng-if="!agencyLocations.length" class="alert alert-warning">Sorry, you do not have any agency location for this portal. Please contact our team to create one.</div>
+			</div>
+			<div ng-show="error" class="alert alert-danger" ng-bind="error"></div>
+		</div>
+	</div>
+</div>
+

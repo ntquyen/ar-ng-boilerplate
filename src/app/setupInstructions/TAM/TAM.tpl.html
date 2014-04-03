@@ -1,0 +1,215 @@
+<ol class="breadcrumb">
+    <li>
+        <a ng-click="goBack()" href="">Home</a>
+    </li>
+    <li class="active">
+        TAM Export Instructions
+    </li>
+</ol>
+
+<tabset>
+  <tab heading="Setup">
+    <h2>
+        TAM File Export Instructions
+    </h2>
+    <p>
+        These directions are necessary for the setup, but don't need to be repeated each time the report is generated. After building the custom report, all you'll need to do is export the report and upload the file.
+    </p>
+    <h3>
+        Preliminary TAM Setup - Avoiding Common Problems
+    </h3>
+    <p>
+        To help you get the "cleanest" and most useful customer list from TAM, there is one very helpful thing you can do...
+    </p>
+    <p>
+        The most common problem with importing data from TAM is the names that show up in the Engine.&nbsp; In TAM, names can be stored in more than one location, in more than one format, and this can create complications when importing your customers to the Engine.&nbsp; So, to help avoid these problems, please make sure your data is as "clean" as possible with respect to names.
+    </p>
+    <h4>
+        3 Tips:
+    </h4>
+    <ol>
+        <li>The Revolution Engine uses "First Name", "Last Name" and "Company" fields so you can more accurately customize your marketing.
+        </li>
+        <li>In the Customer section of TAM is a generic "Name" field. &nbsp;This field is not very reliable since it sometimes contains a company name (for commercial lines clients) and sometimes contains the name of an individual, or even multiple individuals (for personal lines clients).
+        </li>
+        <li>In the Contacts section of TAM there are more specific "first name", "last name" and "company" fields. &nbsp;Since these perfectly match the fields that are used in the Revolution Engine, they are the absolute best way to ensure high quality data in the Revolution Engine, so that you can customize your marketing as effectively as possible.
+        </li>
+    </ol>
+    <h4>
+        What if I don't have contact in TAM for all of my customers?
+    </h4>
+    <ul>
+        <li>
+            <strong>The best solution</strong> is to "clean up" your TAM listings before running your first import. &nbsp;Go through every customer record in TAM and make sure each one has at least one Contact associated with it, and that at least one (and only one) contact per customer is marked in TAM as the "Primary Contact". &nbsp;Also, make sure each contact has accurate data in the First Name, Last Name and Company fields, as well as the other contact fields like email, phone, etc. (make sure the email listed for a contact belongs to that  individual and isn't their wife or husband's email, etc.)
+        </li>
+        <li>
+            <span>If you absolutely don't have the time or manpower right now to take the step above, you can still import data from TAM's Customer section instead. &nbsp;<strong>However, please be aware</strong> that it will not be as "clean" and you may not be able to customize your marketing in certain ways (For example, without a consistent first name, you cannot address your messages "Dear [First Name],")</span>
+        </li>
+    </ul>
+    <h3>
+        Creating a saved report
+    </h3>
+    <p>
+        <em><em>In this step you will be creating and saving a user-defined report. This will allow you to run the report more quickly on an ongoing basis.</em><br></em>
+    </p>
+    <ol>
+        <li>In TAM, click "Reports" on the left sidebar
+        </li>
+        <li>From the TAM Reports screen, click "Search"
+        </li>
+        <li>Select the "Report Selection" tab.
+            <ul>
+                <li>In the "Report Type" box select "Customer"
+                </li>
+                <li>In the "Report Choices" box select "Policies - Current
+                </li>
+                <li>For output type, select "User-Defined"
+                </li>
+            </ul>
+        </li>
+        <li>Select the "Criteria" tab
+            <ul>
+                <li>Set each criteria to "All" (if any criteria does not say all, simply double-click it and clear all special criteria from the selection box on the right side, then save changes and it should reset that criteria to "all" by default.
+                </li>
+                <li>Set Record Listings to "List Each Time Found"
+                </li>
+            </ul>
+        </li>
+        <li>Select the "Description" tab
+            <ul>
+                <li>Either leave the description blank or enter a description if you want one (like "Customer Export Report for Revolution Engine")
+                </li>
+            </ul>
+        </li>
+        <li>Select the "Fields/Sort" tab
+            <ul>
+                <li>a. If there are already items in the field selection area (the box on the right side) clear them all out
+                </li>
+                <li>b. Select the fields listed below. This is done by clicking a field in the box on the left side, then clicking the "Select" button to pull it over into the selection box on the right.
+                </li>
+            </ul>
+            <p>
+                <strong>-<em>Policy Data</em></strong>
+            </p>
+            <p>
+                -Customer/Pol_Idx<br>
+                -Policy Type<br>
+                -Policy Status<br>
+                -Department<br>
+                -Line of Business<br>
+                -Policy Effective Date<br>
+                -Policy Expiration Date<br>
+                -Policy Customer Service Rep (or CSR)<br>
+                -Carrier<br>
+                -Premium<br>
+                -Policy Producer
+            </p>
+            <p>
+                <em><strong>-Customer Data</strong></em>
+            </p>
+            <p>
+                -Customer Number<br>
+                -Customer Code<br>
+                -Customer Name<br>
+                -Customer Attention<br>
+                -Customer Street<br>
+                -Customer City<br>
+                -Customer State<br>
+                -Customer Zip Code<br>
+                -Phone - Business<br>
+                -Phone - Residence<br>
+                -Phone - Fax<br>
+                -Email Address<br>
+                -Customer Heading<br>
+            </p>
+            <p>
+                <em><strong>-Contact Info</strong></em>
+            </p>
+            <p>
+                -Contact Full Name<br>
+                -Contact First Name<br>
+                -Contact Last Name<br>
+                -Contact Company<br>
+                -Contact Street<br>
+                -Contact City<br>
+                -Contact State<br>
+                -Contact Zip Code<br>
+                -Primary Phone Type<br>
+                -Primary Phone<br>
+                -Primary Email Type<br>
+                -Primary Email Address<br>
+                -Method of Contact<br>
+                -Contact Indicator<br>
+                -Birth Date<br>
+                -Relationship to Client
+            </p>
+        </li>
+        <li>Click "Run" (upper-left corner)
+        </li>
+        <li>When prompted, name the report "Agency Revolution Customer Export" and continue
+        </li>
+    </ol>
+  </tab>
+  <tab heading="Export">
+    <h2>
+        Exporting From TAM
+    </h2>
+    <p>
+        <em>In this step you will be running the actual customer report.&nbsp; This report should be run regularly and imported to the Revolution Engine to ensure your data is up-to-date for campaign purposes.</em>
+    </p>
+    <p>
+        <img src="Running_Your_TAM_Export.png" alt="Upload the TAM report">
+    </p>
+    <ol>
+      <li>
+          From the TAM Reports screen, click "User Defined"
+        <ul>
+          <li>
+              a. In the "Report Type" box, select "User Defined Reports".
+          </li>
+          <li>
+              b.In the "Report Choices" box, select the Agency Revolution export report (should be named something like "Agency Revolution Cust Export" or "AR Contact Export")
+          </li>
+          <li>
+            In the "Output Type" area, select "Excel Raw Data"
+          </li>
+        </ul>
+      </li>
+      <li>
+          Click the "Run" button (upper-left corner)
+      </li>
+      <li>
+          When prompted, choose "Send output to an existing file".&nbsp; If this is the first time you've run the report, enter the file name as "Agency Revolution Customer Export" and click OK.&nbsp; If you've run the report before, you can select the filename from the list of options, then click OK.
+      </li>
+      <li>
+          After the report runs, you will be asked whether you want to open the file in Excel.Choose NO (you do <em>not</em> need to open it in Excel)
+      </li>
+    </ol>
+    <p>
+        <strong>Your report is now ready to import to the Engine!</strong>
+    </p>
+  </tab>
+  <tab heading="Import">
+    <h2>
+      Importing Your TAM Report
+    </h2>
+    <p>
+      Once you've completed your export, importing is as easy as coming to this webpage. Just select the <a ng-click="goBack()">Upload TAM File</a> button, drop the Excel file into the importer and complete the wizard.
+    </p>
+
+    <h3>Where to find your TAM Report</h3>
+
+    <p>
+      With a standard TAM setup, you will find your report saved on the drive where your TAM data is stored.  Every network uses different letters for different drives.  The TAM drive may therefore be the L: drive, G: drive, or some other letter.  Locate the correct drive, then you will find the report by opening the DOC or DOCS folder, then the SP-SHEET (think "spreadsheet") folder.  For example, if your TAM drive is the L: drive, the path to that folder should be L:\Docs\SP-Sheet
+    </p>
+
+    <h4>
+      If you can't find your saved report...
+    </h4>
+
+    <p>
+      Run the report again and when asked if you want to open it in Excel select yes.  When the file opens, go to "Save as..." and take note of the folder location where it's saving to.  You can then close Excel and you should be able to locate the file in that same folder location.
+    </p> 
+  </tab>
+</tabset>
+

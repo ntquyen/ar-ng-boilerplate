@@ -1,0 +1,44 @@
+
+<div class="panel">
+  <div class="panel-body">
+  	<ol class="breadcrumb">
+      <li><a ng-click="goBack()" href="">Home</a></li>
+      <li class="active">Help</li>
+    </ol>
+
+  	<h1>Help</h1>
+
+  	<div class="row">
+  		<div class="col-md-4">
+  			<div ng-if="loading">Please wait...</div>
+  			<div ng-if="!loading">	
+	  			<ul class="nav nav-pills nav-stacked" ng-repeat="topic in topics">
+	  				<li ng-class="{active: topic.id == selectedTopic.id}">
+							<a href="" ng-click="getTopicDetail(topic)">
+								<span ng-bind="topic.title"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+  		</div>
+  		<div class="col-md-8" id="topic-information">
+				<div ng-show="selectedTopic.loading">Loading detailed information....</div>
+				<div ng-hide="selectedTopic.loading">
+					<div ng-show="!selectedTopic.error && selectedTopic.detail" class="panel panel-default">
+            <div class="panel-heading"><span ng-bind="selectedTopic.title"></span></div>
+            <div class="panel-body">
+  						<p ng-bind-html="trustAsHtml(selectedTopic.detail.body)"></p>
+  						<hr>
+  						<a href="https://support.agencyrevolution.com/entries/{{selectedTopic.id}}" title="Read more" target="_blank">Read more</a>
+            </div>
+					</div>
+					<div ng-show="selectedTopic.error" class="alert alert-danger" ng-bind="selectedTopic.error"></div>
+				</div>
+	  		<div ng-show="error" class="alert alert-danger" ng-bind="error"></div>
+  		</div>
+  	</div>
+
+		<hr>
+		<div class="btn btn-default" ng-click="goBack()">Back</div>
+	</div>
+</div>

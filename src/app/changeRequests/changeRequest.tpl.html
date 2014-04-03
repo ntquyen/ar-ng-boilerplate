@@ -1,0 +1,109 @@
+<div class="panel">
+  <div class="panel-body">
+
+	  <ol class="breadcrumb">
+	    <li><a href="#" ng-click="goBack()">Home</a></li>
+	    <li class="active">Change Requests</li>
+	  </ol>
+
+		<div class="panel panel-info" ng-if="changeRequests.length">
+
+			<div class="panel-body">
+				<div ng-if="loadingChangeRequests"><div class="spinner"></div></div>
+				<div ng-if="!loadingChangeRequests">
+					<!-- <div ng-if="!changeRequests.length" class="alert alert-warning">You don't have any open requests.</div> -->
+
+					<div ng-if="changeRequests.length">
+						<ol>
+							<li ng-repeat="changeRequest in changeRequests">
+								<a href="https://agencyrevolution.zendesk.com/agent/#/tickets/{{changeRequest.id}}" title="changeRequest.subject" target="_blank">
+									<span ng-bind="changeRequest.subject"></span>
+								</a>
+							</li>
+						</ol>
+					</div>
+					<div ng-if="changeRequestsError" class="alert alert-danger" ng-bind="changeRequestsError"></div>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="!changeTypeSelected">
+			<h3>Contact Us</h3>
+			<div class="row">
+				<div class="col-md-6">
+					<button type="button" class="btn btn-default btn-large center-block" ng-click="changeRequestType(bugType)"><span class="fa fa-bug"></span> Bug</button>
+					<p>Is something not working the way it was designed to? Complete this bug report and we'll investigate.</p>
+				</div>
+				<div class="col-md-6">
+					<button type="button" class="btn btn-default btn-large center-block" ng-click="changeRequestType(changeType)"><span class="fa fa-flask"></span> Customization</button>
+					<p>Do you need custom field mapping, name modification or a different field? Let us know here</p>
+				</div>
+			</div>
+		</div>
+		<div ng-if="changeTypeSelected">
+			<h2>
+				Submit your <span ng-bind="requestType"></span>
+			</h2>
+
+			<div ng-if="submitting">Your change request is being submitted to our system, please wait...</div>
+			<div ng-if="!submitting">
+				<p class="lead" ng-if="requestType == changeType">
+					Hi <span ng-bind="changeRequest.requester.name"></span>, thanks for submitting this request. Remember, Customization requests are specific to your agency. They usually involve adjusting the mapping of data, such as names, policy types and other details. If we can see the data in your system we can probably map it to the Engine.
+				</p>
+				<p class="lead" ng-if="requestType == bugType">
+					Hi <span ng-bind="changeRequest.requester.name"></span>, thanks for reporting this bug. Bugs are when the system was designed to work in a specific way and it doesn't. We need as much information as possible to research the bug. Example contacts, their IDs, relevant fields and when you first noticed the issue. This information will help us trace the source and fix the problem.
+				</p>
+				<p ng-if="requestType == bugType">
+					Please don't submit change requests with this form. The questions here help us trace bugs. The change request form (used for new field mappings, etc.) helps us better make those changes.
+				</p>
+				<p>
+				<div class="form-horizontal" role="form" ng-if="!submitResponse.success" >
+					<div class="form-group">
+						<label class="control-label">Subject</label>
+						<input class="form-control" type="text" ng-model="changeRequest.subject" placeholder="Your request subject" />
+					</div>
+<!-- 					<div class="form-group">
+						<label class="control-label">Request Type</label>
+						<select class="form-control" ng-options="requestType for requestType in requestTypes" ng-model="requestType" ng-change="changeRequestType(requestType)" />
+					</div> -->
+					<div class="form-group" ng-repeat="question in changeRequest.questions">
+						<label class="control-label" ng-bind="question.question"></label>
+						<textarea class="form-control" rows="5" ng-model="question.answer"></textarea>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Upload any related screenshots/attachments</label>
+						<div>
+							<input type="file" ng-file-select="onFileSelect($files)" />
+							<div ng-if="dropSupported" class="drop-box" ng-file-drop="onFileSelect($files);" ng-file-drop-available="dropSupported=true">or drop files here</div>
+							<div ng-if="!dropSupported">HTML5 Drop File is not supported on this browser</div>
+						</div>
+					</div>
+					<div class="form-group" ng-if="uploadPercent > 0 && uploadPercent < 100">
+						<label class="control-label"></label>
+						<div class="progress">
+							<span class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadpercent}}%">
+								<span class="sr-only"><span ng-bind="uploadPercent"></span>% Complete (success)</span>
+							</span>
+						</div>
+						<button class="btn btn-alert" ng-click="upload.abort()">Cancel Upload</button>
+					</div>
+					<hr>
+					<div class="btn btn-primary" ng-click="submit()">Submit</div>
+				</div>
+
+
+				<div ng-if="submitResponse.success" class="alert alert-success">
+					<div>Congratulation! Your change request has been submitted successfully. We will get it completed as soon as possible.</div>
+					<div>ZenDesk Change Request Reference: <strong ng-bind="submitResponse.ticket.id"></strong></div>
+					<br>
+					<div class="dnnPrimaryAction" ng-click="createNewChangeRequest()">New Change Request</div>
+				</div>
+				<div ng-if="submitResponse.error" class="alert alert-danger" ng-bind="submitResponse.error"></div>
+			</div>
+			</div>
+
+		<hr>
+		<div class="btn btn-default" ng-click="goBack()">Back</div>
+		</div>
+	</div>
+

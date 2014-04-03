@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="contactIntegration" ng-controller="AppCtrl">
+  <head>
+    <title ng-bind="pageTitle"></title>
+    
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.css?cdv=40" type="text/css" rel="stylesheet"/>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- compiled CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/agency-rev-contact-integrations-0.0.1.css" />
+
+    <!-- compiled JavaScript -->
+    <script type="text/javascript" src="vendor/ng-file-upload/angular-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="vendor/ng-file-upload/angular-file-upload.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-utils/modules/route/route.js"></script>
+    <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="src/app/apiInfo/apiInfo.js"></script>
+    <script type="text/javascript" src="src/app/app.js"></script>
+    <script type="text/javascript" src="src/app/changeRequests/changeRequest.js"></script>
+    <script type="text/javascript" src="src/app/dashboard/dashboard.js"></script>
+    <script type="text/javascript" src="src/app/fileUploads/fileUpload.js"></script>
+    <script type="text/javascript" src="src/app/helps/help.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/AMS360/AMS360.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/DORIS/DORIS.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/EbixASP/EbixASP.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/Eclipse/Eclipse.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/Epic/Epic.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/FSC/FSC.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/HawkSoft/HawkSoft.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/HawkSoftDesktop/HawkSoftDesktop.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/InStar/InStar.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/PartnerXE/PartnerXE.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/PowerBroker/PowerBroker.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/QQCatalyst/QQCatalyst.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/TAM/TAM.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/Vision/Vision.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/Xanatek/Xanatek.js"></script>
+    <script type="text/javascript" src="src/app/setupInstructions/setupInstruction.js"></script>
+    <script type="text/javascript" src="src/app/status/status.js"></script>
+    <script type="text/javascript" src="src/common/agencyLocationProperties/agencyLocationProperty.js"></script>
+    <script type="text/javascript" src="src/common/agencyLocations/agencyLocation.js"></script>
+    <script type="text/javascript" src="src/common/amsTypeLogTypeMaps/amsTypeLogTypeMap.js"></script>
+    <script type="text/javascript" src="src/common/changeRequests/changeRequest.js"></script>
+    <script type="text/javascript" src="src/common/fakeApi/fakeApi.js"></script>
+    <script type="text/javascript" src="src/common/fileUploads/fileUpload.js"></script>
+    <script type="text/javascript" src="src/common/status/status.js"></script>
+    <script type="text/javascript" src="src/common/topics/topic.js"></script>
+    <script type="text/javascript" src="templates-common.js"></script>
+    <script type="text/javascript" src="templates-app.js"></script>
+  </head>
+  
+  <body>
+    <div class="container" ui-view="main"></div>
+  </body>
+  
+</html>

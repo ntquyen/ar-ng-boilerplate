@@ -1,0 +1,77 @@
+
+<div class="panel">
+  <div class="panel-body">
+
+  <ol class="breadcrumb">
+    <li><a ng-click="goBack()" href="">Home</a></li>
+    <li class="active"><span ng-bind="agencyLocation.exportType"></span> File Upload</li>
+  </ol>
+
+    <div class="panel panel-primary" ng-show="step >= 1">
+        <div class="panel-heading">Step 1: Upload <span ng-bind="agencyLocation.exportType"></span> File</div>
+        <div class="panel-body">
+            <p>Please select and upload the exported file. Unsure of <a ui-sref="setupInstruction">how to export</a> this file?</p>
+            <div>
+                <input type="file" ng-file-select="onFileSelect($files)">
+                <div ng-show="dropSupported" class="drop-box well" ng-file-drop="onFileSelect($files);" ng-file-drop-available="dropSupported=true">or drop files here</div>
+                <div ng-show="!dropSupported">HTML5 Drop File is not supported on this browser</div>
+            </div>
+            <div ng-show="step1.uploadPercent > 0 && step1.uploadPercent < 100">
+                <div class="progress">
+                    <span class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{step1.uploadPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{step1.uploadpercent}}%">
+                        <span class="sr-only"><span ng-bind="step1.uploadPercent"></span>% Complete (success)</span>
+                    </span>
+                </div>
+                <button class="btn btn-alert" ng-click="upload.abort()">Cancel Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-primary" ng-show="step >= 2">
+        <div class="panel-heading">Step 2: Verify and Import</div>
+        <div class="panel-body">
+            <p>Are you ready?</p>
+            <div class="btn btn-success" ng-click="import()">
+                <span ng-show="step2.processing">We are processing. Please wait...</span>
+                <span ng-hide="step2.processing">GO</span>
+            </div>
+            
+            <div ng-show="responseData && responseData.message">
+                
+                <div class="panel panel-warning" ng-show="responseData.message.warnings.length">
+                    <div class="panel-heading">Warning</div>
+                    <div class="panel-body">
+                        <div ng-repeat="warning in responseData.message.warnings" class="dnnFormMessage dnnFormWarning">
+                            <span ng-bind="warning"></span>
+                        </div>        
+                    </div>
+                </div>
+                
+                <div class="panel panel-info" ng-show="responseData.message.infos.length">
+                    <div class="panel-heading">Info</div>
+                    <div class="panel-body">
+                        <div ng-repeat="info in responseData.message.infos" class="dnnFormMessage dnnFormInfo">
+                            <span ng-bind="info"></span>
+                        </div>  
+                    </div>
+                </div>
+                
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Error</div>
+                    <div class="panel-body">
+                        <div ng-repeat="error in responseData.message.errors" class="dnnFormMessage dnnFormValidationSummary">
+                            <span ng-bind="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="responseData.success" class="dnnFormMessage dnnFormSuccess">Congrats!</div>
+
+        </div>    
+    </div>
+
+    <hr>
+    <div class="btn btn-default" ng-click="goBack()">Back</div>
+  </div>
+</div>

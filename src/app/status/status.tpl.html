@@ -1,0 +1,103 @@
+<div class="panel">
+  <div class="panel-body">
+
+	  <ol class="breadcrumb">
+	    <li><a href="#" class="active" ng-click="goBack()">Home</a></li>
+	    <li><a href="#" class="active">Status</a></li>
+	  </ol>
+
+
+		<div ng-show="error" ng-bind="error" class="alert alert-danger"></div>
+		<div class="panel panel-info">
+			<div class="panel-heading">Status</div>
+			<div class="panel-body">
+				<hr>
+				<h3>Last sync</h3>
+				<div ng-if="loading">Please wait...</div>
+				<div ng-if="!loading" class="row">
+					<div class="col-md-4">
+						<div class="panel" ng-class="{'panel-success': status.enabled, 'panel-danger': !status.enabled}">
+							<div class="panel-heading text-align-center">
+								<h1 ng-show="status.enabled">YES</h1>
+								<h1 ng-hide="status.enabled">NO</h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Enabled</h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-info">
+							<div class="panel-heading text-align-center">
+								<h1 ng-bind="status.lastSyncActivity" ng-show="status.lastSyncActivity"></h1>
+								<h1 ng-hide="status.lastSyncActivity">_ _</h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Minutes</h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel" ng-class="{'panel-success': status.triggerPointsEnabled, 'panel-danger': !status.triggerPointsEnabled}">
+							<div class="panel-heading text-align-center">
+								<h1 ng-show="status.triggerPointsEnabled">YES</h1>
+								<h1 ng-hide="status.triggerPointsEnabled">NO</h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Trigger Point</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h3>Messages in 7 days</h3>
+				<div ng-if="loading">Please wait...</div>
+				<div ng-if="!loading" class="row">
+					<div class="col-md-3">
+						<div class="panel panel-info">
+							<div class="panel-heading text-align-center">
+								<h1 ng-bind="status.messages7DaysCount" style="align: center;"></h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Message<span ng-show="status.messages7DaysCount > 0">s</span></h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-warning">
+							<div class="panel-heading text-align-center">
+								<h1 ng-bind="status.warnings7DaysCount"></h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Warning<span ng-show="status.warnings7DaysCount > 0">s</span></h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-danger">
+							<div class="panel-heading text-align-center">
+								<h1 ng-bind="status.errors7DaysCount"></h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Error<span ng-show="status.errors7DaysCount > 0">s</span></h4>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-info">
+							<div class="panel-heading text-align-center">
+								<h1 ng-bind="status.triggerPointsFired7DaysCount"></h1>
+							</div>
+							<div class="panel-body text-align-center">
+								<h4>Trigger Point<span ng-show="status.triggerPointsFired7DaysCount > 0">s</span></h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<hr>
+		<div class="btn btn-default" ng-click="goBack()">Back</div>
+
+	</div>
+</div>

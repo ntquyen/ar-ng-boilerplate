@@ -1,0 +1,73 @@
+<div class="panel">
+  <div class="panel-body">
+
+  <ol class="breadcrumb">
+    <li><a href="#" class="active">Home</a></li>
+  </ol>
+
+  <span ng-bind="status.enabled"></span>
+<!-- 
+  -- if not synced since x
+    -- if file upload
+      Remind to upload the file right now!
+    -- if not file upload
+      is it broken? check instructions. or contact us.
+  -- if never synced
+      setup instructions 
+    -->
+  <p class="bg-warning">If looks like you are new here. Be sure to <a ui-sref="setupInstruction">read the instructions</a> to get started.</p>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4" ng-show="agencyLocation.integrationType == 'FileUpload'">
+          <div class="btn btn-primary btn-lg" ui-sref="fileUpload"><span class="fa fa-cloud-upload"></span> Upload <span ng-bind="agencyLocation.exportType"></span> File</div>
+          <div>
+            Upload your <span ng-bind="agencyLocation.exportType"></span> file. This should be done at least twice a week.
+          </div>
+        </div>
+
+        <div class="col-md-4" ng-show="agencyLocation.integrationType != 'FileUpload'">
+          <div class="btn btn-default btn-lg" ui-sref="setupInstruction"><span class="glyphicon glyphicon-list-alt"></span> Setup Instructions</div>
+          <div>
+            Don't worry. Following the instruction to set up the import.
+          </div>
+        </div>
+        <div class="col-md-4" ng-show="agencyLocation.integrationType == 'FileUpload'">
+          <div class="btn btn-default btn-lg" ui-sref="setupInstruction"><span class="glyphicon glyphicon-list-alt"></span> <span ng-bind="agencyLocation.exportType"></span> Export Instructions</div>
+          <div>
+            Follow these directions to export your data from <span ng-bind="agencyLocation.exportType"></span>.
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="btn btn-default btn-lg" ui-sref="help"><span class="fa fa-question-circle"></span> Help</div>
+          <div>
+            Find common questions and resolve your problem.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="btn btn-default btn-lg" ui-sref="changeRequest"><span class="fa fa-edit"></span> Change Request</div>
+          <div>
+            Submit your change request here and we will update to the system for you as soon as possible.
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="btn btn-default btn-lg" ui-sref="status"><span class="fa fa-dashboard"></span> Status</div>
+          <div>
+            We provide you a tool to monitor the status of message queues.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="well well-lg">
+      Your working on <strong ng-bind="informationMask" ng-click="toggleInformation()"></strong>, your export system is <strong ng-bind="agencyLocation.exportType"></strong>. If you want to change location, please click <a href ng-click="changeLocation()">here</a>
+    </div>
+
+  </div>
+
