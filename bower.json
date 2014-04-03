@@ -1,10 +1,10 @@
 {
-  "name": "agency-rev-contact-integrations",
+  "name": "ar-ng-boilerplate",
   "version": "0.0.1",
   "devDependencies": {
-    "angular": "1.2.4",
-    "angular-mocks": "~1.0.7",
-    "bootstrap": "~3.0.3",
+    "angular": "latest",
+    "angular-mocks": "latest",
+    "bootstrap": "latest",
     "angular-bootstrap": "~0.10.0",
     "angular-ui-router": "0.2.7",
     "angular-ui-utils": "~0.0.3"
