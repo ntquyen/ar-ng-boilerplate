@@ -5,18 +5,18 @@
     <li><a href="#" class="active">Home</a></li>
   </ol>
 
-  <span ng-bind="status.enabled"></span>
-<!-- 
-  -- if not synced since x
-    -- if file upload
-      Remind to upload the file right now!
-    -- if not file upload
-      is it broken? check instructions. or contact us.
-  -- if never synced
-      setup instructions 
-    -->
-  <p class="bg-warning">If looks like you are new here. Be sure to <a ui-sref="setupInstruction">read the instructions</a> to get started.</p>
-
+    <div class="dashboard-status">
+      <!-- not ever synced and file upload -->
+      <p class="bg-warning" ng-if="agencyLocation.integrationType === 'FileUpload' && status.lastSyncActivityDays === null">If looks like you are new here. Be sure to <a ui-sref="setupInstruction">read the instructions</a> to get started.</p>
+      <!-- not ever synced and NOT file upload -->
+      <p class="bg-warning" ng-if="agencyLocation.integrationType !== 'FileUpload' && status.lastSyncActivityDays === null ">Welcome! Let's get started and setup your integration. Your implementation specialist is here to help you <a ui-sref="setupInstruction">get started</a>. If you're feeling brave, <a ui-sref="setupInstruction">dive right in!</a></p>
+      <!-- 2+ days since synced and NOT file upload -->
+      <p class="bg-warning" ng-if="agencyLocation.integrationType !== 'FileUpload' && status.lastSyncActivityDays > 2 ">It's been {{status.lastSyncActivityDays}} days since you last synced. That can't be good! Is everything <a ui-sref="setupInstruction">setup correctly</a> Contact us if you need <a ui-sref="help">help</a>.</p>
+      <!-- file upload and sync in last 4 days -->
+      <p class="bg-success" ng-if="agencyLocation.integrationType === 'FileUpload' && status.lastSyncActivityDays !== null && status.lastSyncActivityDays <= 4">Your {{agencyLocation.exportType}} system integration is running smoothly.</p>
+      <!-- NOT file upload and sync in last day -->
+      <p class="bg-success" ng-if="agencyLocation.integrationType !== 'FileUpload' && status.lastSyncActivityDays !== null && status.lastSyncActivityDays <= 1">Your {{agencyLocation.exportType}} system integration is running smoothly.</p>
+    </div>
 
     <div class="container">
       <div class="row">
@@ -62,6 +62,10 @@
         </div>
       </div>
     </div>
+
+    <hr>
+
+    <div ar-moonray-light></div>
 
     <hr>
 

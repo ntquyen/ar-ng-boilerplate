@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.status', ['ui.router', 'status'])
+angular.module('contactIntegration.status', ['ui.router', 'status', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,10 +36,10 @@ angular.module('contactIntegration.status', ['ui.router', 'status'])
 /**
  * And of course we define a controller for our route.
  */
-.controller('StatusCtrl', function($scope, $state, statusApi) {
+.controller('StatusCtrl', function($scope, $state, statusApi, appConfig) {
     console.log('contactIntegration.status.StatusCtrl');
     // back to previous state
-    if (!App.agencyLocation) {
+    if (!appConfig.agencyLocation) {
         $state.transitionTo('apiInfo');
         return;
     }
@@ -50,7 +50,7 @@ angular.module('contactIntegration.status', ['ui.router', 'status'])
     // load status
     $scope.loadStatus = function() {
         $scope.loading = true;
-        statusApi.getStatus(App.agencyLocation.agencyLocationKey).success(function(data) {
+        statusApi.getStatus(appConfig.agencyLocation.agencyLocationKey).success(function(data) {
             $scope.status = data;
             $scope.loading = false;
         }).error(function(err) {
@@ -63,7 +63,7 @@ angular.module('contactIntegration.status', ['ui.router', 'status'])
         //    $scope.loadStatus();
         //}, 5000);
     };
-    if (App && App.agencyLocation && App.agencyLocation.agencyLocationKey) {
+    if (App && appConfig.agencyLocation && appConfig.agencyLocation.agencyLocationKey) {
         $scope.loadStatus();
     }
 });

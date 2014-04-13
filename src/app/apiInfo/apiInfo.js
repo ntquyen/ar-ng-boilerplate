@@ -1,4 +1,4 @@
-angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'agencyLocationProperty', 'amsTypeLogTypeMap', 'ngCookies'])
+angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'agencyLocationProperty', 'amsTypeLogTypeMap', 'ngCookies', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -22,14 +22,14 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
 /**
  * And of course we define a controller for our route.
  */
-.controller('ApiInfoCtrl', function HomeController($scope, $state, $cookies, agencyLocationApi, agencyLocationPropertyApi, amsTypeLogTypeMapApi) {
+.controller('ApiInfoCtrl', function HomeController($scope, $state, $cookies, agencyLocationApi, agencyLocationPropertyApi, amsTypeLogTypeMapApi, appConfig) {
     console.log('contactIntegration.apiInfo.ApiInfoCtrl');
     // back to previous state
     $scope.goBack = function() {
-        $state.transitionTo(App && App.fromState && App.fromState.name && App.fromState.name != 'apiInfo' ? App.fromState.name : 'dashboard');
+        $state.transitionTo(appConfig && appConfig.fromState && appConfig.fromState.name && appConfig.fromState.name != 'apiInfo' ? appConfig.fromState.name : 'dashboard');
     };
     // return to previous state if no force to select another location
-    if (App.agencyLocation && !App.selectAnotherAgencyLocation) {
+    if (appConfig.agencyLocation && !appConfig.selectAnotherAgencyLocation) {
         $scope.goBack();
         return;
     }
@@ -45,8 +45,8 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
             return;
         }
         $scope.loadIntegrationType();
-        App.agencyLocation = $scope.agencyLocation;
-        App.selectAnotherAgencyLocation = false;
+        appConfig.agencyLocation = $scope.agencyLocation;
+        appConfig.selectAnotherAgencyLocation = false;
         // store to cookie
         $cookies.agencyLocationId = $scope.agencyLocation.agencyLocationId;
         $cookies.exportType = $scope.agencyLocation.exportType;
@@ -58,7 +58,7 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
         if (!$scope.agencyLocation.amsTypes) {
             return;
         }
-        if (!App.selectAnotherAgencyLocation) {
+        if (!appConfig.selectAnotherAgencyLocation) {
             // try to read from cookie and select automatically
             var exportType = $cookies.exportType;
             if (exportType) {
@@ -69,7 +69,7 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
         }
         if ($scope.agencyLocation.amsTypes.length) {
             $scope.agencyLocation.exportType = $scope.agencyLocation.amsTypes[0];
-            if ($scope.agencyLocation.amsTypes.length === 1 && !App.selectAnotherAgencyLocation) {
+            if ($scope.agencyLocation.amsTypes.length === 1 && !appConfig.selectAnotherAgencyLocation) {
                 // select automatically if there is only one location
                 $scope.selectAgencyLocation();
             }
@@ -96,8 +96,8 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
                 $scope.agencyLocation.saveAmsType = false;
             } else {
                 $scope.agencyLocation.saveAmsType = true;
-                for (var j = App.amsTypeLogTypeMaps.length - 1; j >= 0; j--) {
-                    $scope.agencyLocation.amsTypes.push(App.amsTypeLogTypeMaps[j].asmType);
+                for (var j = appConfig.amsTypeLogTypeMaps.length - 1; j >= 0; j--) {
+                    $scope.agencyLocation.amsTypes.push(appConfig.amsTypeLogTypeMaps[j].asmType);
                 }
             }
             $scope.loading.amsTypeLogTypeMap = false;
@@ -110,8 +110,8 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
     };
     // get AmsTypeLogTypeMap object
     $scope.getAmsTypeLogTypeMap = function(amsType) {
-        for (var i = App.amsTypes.length - 1; i >= 0; i--) {
-            var amsTypeLogTypeMap = App.amsTypes[i];
+        for (var i = appConfig.amsTypes.length - 1; i >= 0; i--) {
+            var amsTypeLogTypeMap = appConfig.amsTypes[i];
             if (amsTypeLogTypeMap.amsType === amsType) {
                 return amsTypeLogTypeMap;
             }
@@ -152,16 +152,16 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
     };
     // load locations
     $scope.loadAgencyLocations = function() {
-        if (App.agencyLocations) {
+        if (appConfig.agencyLocations) {
             // no need to reload if data is ready
-            $scope.agencyLocations = App.agencyLocations;
+            $scope.agencyLocations = appConfig.agencyLocations;
             $scope.loadAgencyLocation();
         } else {
             // load all locations  
             $scope.loading.agencyLocation = true;
             agencyLocationApi.getAgencyLocations().success(function(data) {
                 $scope.agencyLocations = data;
-                App.agencyLocations = data;
+                appConfig.agencyLocations = data;
                 $scope.loading.agencyLocation = false;
                 $scope.loadAgencyLocation();
             }).error(function(err) {
@@ -171,7 +171,6 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
             });
         }
     };
-
     // change agency location
     $scope.changeAgencyLocation = function(agencyLocation) {
         $scope.agencyLocation = agencyLocation;
@@ -179,14 +178,14 @@ angular.module('contactIntegration.apiInfo', ['ui.router', 'agencyLocation', 'ag
     };
     // load all AmsTypeLogTypeMaps
     $scope.loadAmsTypeLogTypeMaps = function() {
-        if (App.amsTypes) {
+        if (appConfig.amsTypes) {
             // no need to reload if data is ready
-            $scope.amsTypes = App.amsTypes;
+            $scope.amsTypes = appConfig.amsTypes;
         } else {
             // load all AmsTypeLogTypeMaps
             $scope.loading.amsTypeLogTypeMap = true;
             amsTypeLogTypeMapApi.get().success(function(data) {
-                App.amsTypes = data;
+                appConfig.amsTypes = data;
                 $scope.loading.amsTypeLogTypeMap = false;
             }).error(function(err) {
                 $scope.loading.amsTypeLogTypeMap = false;

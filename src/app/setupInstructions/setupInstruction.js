@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.setupInstruction', ['ui.router', 'contactIntegration.setupInstruction.AMS360', 'contactIntegration.setupInstruction.DORIS', 'contactIntegration.setupInstruction.Eclipse', 'contactIntegration.setupInstruction.FSC', 'contactIntegration.setupInstruction.HawkSoft', 'contactIntegration.setupInstruction.HawkSoftDesktop', 'contactIntegration.setupInstruction.InStar', 'contactIntegration.setupInstruction.PartnerXE', 'contactIntegration.setupInstruction.PowerBroker', 'contactIntegration.setupInstruction.TAM', 'contactIntegration.setupInstruction.Vision', 'contactIntegration.setupInstruction.Xanatek', 'contactIntegration.setupInstruction.EbixASP', 'contactIntegration.setupInstruction.Epic', 'contactIntegration.setupInstruction.QQCatalyst'])
+angular.module('contactIntegration.setupInstruction', ['ui.router', 'contactIntegration.setupInstruction.AMS360', 'contactIntegration.setupInstruction.DORIS', 'contactIntegration.setupInstruction.Eclipse', 'contactIntegration.setupInstruction.FSC', 'contactIntegration.setupInstruction.HawkSoft', 'contactIntegration.setupInstruction.HawkSoftDesktop', 'contactIntegration.setupInstruction.InStar', 'contactIntegration.setupInstruction.PartnerXE', 'contactIntegration.setupInstruction.PowerBroker', 'contactIntegration.setupInstruction.TAM', 'contactIntegration.setupInstruction.Vision', 'contactIntegration.setupInstruction.Xanatek', 'contactIntegration.setupInstruction.EbixASP', 'contactIntegration.setupInstruction.Epic', 'contactIntegration.setupInstruction.QQCatalyst', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,10 +36,10 @@ angular.module('contactIntegration.setupInstruction', ['ui.router', 'contactInte
 /**
  * And of course we define a controller for our route.
  */
-.controller('SetupInstructionCtrl', function($scope, $state) {
+.controller('SetupInstructionCtrl', function($scope, $state, appConfig) {
     console.log('contactIntegration.setupInstruction.SetupInstructionCtrl');
     // back to previous state
-    if (!App.agencyLocation) {
+    if (!appConfig.agencyLocation) {
         $state.transitionTo('apiInfo');
         return;
     }
@@ -47,33 +47,33 @@ angular.module('contactIntegration.setupInstruction', ['ui.router', 'contactInte
     $scope.goBack = function() {
         $state.transitionTo('dashboard');
     };
-    if (App.agencyLocation.exportType === 'AMS360') {
+    if (appConfig.agencyLocation.exportType === 'AMS360') {
         $state.transitionTo('setupInstruction.AMS360');
-    } else if (App.agencyLocation.exportType === 'DORIS') {
+    } else if (appConfig.agencyLocation.exportType === 'DORIS') {
         $state.transitionTo('setupInstruction.DORIS');
-    } else if (App.agencyLocation.exportType === 'EbixASP') {
+    } else if (appConfig.agencyLocation.exportType === 'EbixASP') {
         $state.transitionTo('setupInstruction.EbixASP');
-    } else if (App.agencyLocation.exportType === 'Eclipse') {
+    } else if (appConfig.agencyLocation.exportType === 'Eclipse') {
         $state.transitionTo('setupInstruction.Eclipse');
-    } else if (App.agencyLocation.exportType === 'Epic') {
+    } else if (appConfig.agencyLocation.exportType === 'Epic') {
         $state.transitionTo('setupInstruction.Epic');
-    } else if (App.agencyLocation.exportType === 'FSC') {
+    } else if (appConfig.agencyLocation.exportType === 'FSC') {
         $state.transitionTo('setupInstruction.FSC');
-    } else if (App.agencyLocation.exportType === 'HawkSoft') {
+    } else if (appConfig.agencyLocation.exportType === 'HawkSoft') {
         $state.transitionTo('setupInstruction.HawkSoft');
-    } else if (App.agencyLocation.exportType === 'HawkSoftDesktop') {
+    } else if (appConfig.agencyLocation.exportType === 'HawkSoftDesktop') {
         $state.transitionTo('setupInstruction.HawkSoftDesktop');
-    } else if (App.agencyLocation.exportType === 'InStar') {
+    } else if (appConfig.agencyLocation.exportType === 'InStar') {
         $state.transitionTo('setupInstruction.InStar');
-    } else if (App.agencyLocation.exportType === 'PartnerXE') {
+    } else if (appConfig.agencyLocation.exportType === 'PartnerXE') {
         $state.transitionTo('setupInstruction.PartnerXE');
-    } else if (App.agencyLocation.exportType === 'PowerBroker') {
+    } else if (appConfig.agencyLocation.exportType === 'PowerBroker') {
         $state.transitionTo('setupInstruction.PowerBroker');
-    } else if (App.agencyLocation.exportType === 'TAM') {
+    } else if (appConfig.agencyLocation.exportType === 'TAM') {
         $state.transitionTo('setupInstruction.TAM');
-    } else if (App.agencyLocation.exportType === 'Vision') {
+    } else if (appConfig.agencyLocation.exportType === 'Vision') {
         $state.transitionTo('setupInstruction.Vision');
-    } else if (App.agencyLocation.exportType === 'Xanatek') {
+    } else if (appConfig.agencyLocation.exportType === 'Xanatek') {
         $state.transitionTo('setupInstruction.Xanatek');
     } else {
         $scope.error = "Sorry, your system has not supported yet! Please contact our team to get it supported soon!";

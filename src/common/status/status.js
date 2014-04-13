@@ -1,30 +1,12 @@
-angular.module('status', ['fakeApi']).factory('statusApi', ['$http', 'fakeApiService',
-    function($http, fakeApiService) {
+angular.module('status', ['appConfig']).factory('statusApi', ['$http', 'appConfig',
+    function($http, appConfig) {
         return {
             // get status
             getStatus: function(agencyLocationKey) {
-                return fakeApiService.buildFakeResponse({
-                    "agencyLocationDesc": "Test Location 2",
-                    "agencyLocationKey": "a92c6262-17e0-4890-8e0e-926a068323b1",
-                    "moonRayAppId": "2_1751_4MYg9KXRU",
-                    "dateCreated": "2010-10-22T16:35:27",
-                    "dateModified": "2013-03-04T20:08:51",
-                    "triggerPointsEnabled": false,
-                    "enabled": true,
-                    "amsType": null,
-                    "accountRep": null,
-                    "lastSyncActivity": null,
-                    "messages7DaysCount": 1,
-                    "triggerPointsFired7DaysCount": 0,
-                    "errors7DaysCount": 4,
-                    "warnings7DaysCount": 0
-                });
-                /*
                 if (!agencyLocationKey) {
                     throw new Error('Agency Location Key is required');
                 }
-                return $http.get('/desktopModules/AgencyRevContactIntegrations/Api/Status/Get/' + agencyLocationKey);
-                */
+                return $http.get(appConfig.baseUrl + '/Api/Status/Get/' + agencyLocationKey);
             }
         };
     }

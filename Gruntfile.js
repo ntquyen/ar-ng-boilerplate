@@ -13,10 +13,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-conventional-changelog');
     grunt.loadNpmTasks('grunt-bump');
     grunt.loadNpmTasks('grunt-coffeelint');
-    grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ngmin');
     grunt.loadNpmTasks('grunt-html2js');
+    grunt.loadNpmTasks('grunt-contrib-less');
     /**
      * Load in our build configuration file.
      */
@@ -31,6 +31,7 @@ module.exports = function(grunt) {
          * version. It's already there, so we don't repeat ourselves here.
          */
         pkg: grunt.file.readJSON("package.json"),
+        lessDest: "<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css",
         /**
          * The banner is the comment that is placed at the top of our compiled
          * source files. It is first processed as a Grunt template, where the `<%=`
@@ -77,9 +78,34 @@ module.exports = function(grunt) {
             build_app_assets: {
                 files: [{
                     src: ['**'],
-                    dest: '<%= build_dir %>/assets/',
+                    dest: '<%= build_dir %>',
                     cwd: 'src/assets',
                     expand: true
+                }]
+            },
+            build_appjs: {
+                files: [{
+                    src: ['<%= app_files.js %>'],
+                    dest: '<%= build_dir %>/',
+                    cwd: '.',
+                    expand: true
+                }]
+            },
+            build_vendor_js: {
+                files: [{
+                    src: ['<%= vendor_files.js %>', '<%= vendor_files.css %>', '<%= vendor_files.fonts %>', '<%= vendor_files.assets %>'],
+                    dest: '<%= build_dir %>/',
+                    cwd: '.',
+                    expand: true
+                }]
+            },
+            build_vendor_fonts: {
+                files: [{
+                    src: ['<%= vendor_files.fonts %>'],
+                    dest: '<%= build_dir %>/fonts/',
+                    cwd: '.',
+                    expand: true,
+                    flatten: true
                 }]
             },
             build_vendor_assets: {
@@ -91,27 +117,11 @@ module.exports = function(grunt) {
                     flatten: true
                 }]
             },
-            build_appjs: {
-                files: [{
-                    src: ['<%= app_files.js %>'],
-                    dest: '<%= build_dir %>/',
-                    cwd: '.',
-                    expand: true
-                }]
-            },
-            build_vendorjs: {
-                files: [{
-                    src: ['<%= vendor_files.js %>'],
-                    dest: '<%= build_dir %>/',
-                    cwd: '.',
-                    expand: true
-                }]
-            },
             compile_assets: {
                 files: [{
                     src: ['**'],
                     dest: '<%= compile_dir %>/assets',
-                    cwd: '<%= build_dir %>/assets',
+                    cwd: 'src/desktopmodules/agencyrevcontactintegrations/frontend/assets',
                     expand: true
                 }]
             }
@@ -125,8 +135,8 @@ module.exports = function(grunt) {
              * together.
              */
             build_css: {
-                src: ['<%= vendor_files.css %>', '<%= recess.build.dest %>'],
-                dest: '<%= recess.build.dest %>'
+                src: ['<%= vendor_files.css %>', '<%= lessDest %>'],
+                dest: '<%= lessDest %>'
             },
             /**
              * The `compile_js` target is the concatenation of our application source
@@ -212,6 +222,30 @@ module.exports = function(grunt) {
                     noUnderscores: false,
                     noIDs: false,
                     zeroUnits: false
+                }
+            }
+        },
+        less: {
+            build: {
+                options: {
+                    compress: false,
+                    yuicompress: false,
+                    optimization: 2
+                },
+                files: {
+                    // target.css file: source.less file
+                    "<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css": ['<%= app_files.less %>']
+                }
+            },
+            compile: {
+                options: {
+                    compress: true,
+                    yuicompress: true,
+                    optimization: 2
+                },
+                files: {
+                    // target.css file: source.less file
+                    "<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css": ['<%= app_files.less %>']
                 }
             }
         },
@@ -311,7 +345,7 @@ module.exports = function(grunt) {
              */
             build: {
                 dir: '<%= build_dir %>',
-                src: ['<%= vendor_files.js %>', '<%= build_dir %>/src/**/*.js', '<%= html2js.common.dest %>', '<%= html2js.app.dest %>', '<%= vendor_files.css %>', '<%= recess.build.dest %>']
+                src: ['<%= vendor_files.js %>', '<%= build_dir %>/src/**/*.js', '<%= html2js.common.dest %>', '<%= html2js.app.dest %>', '<%= vendor_files.css %>', '<%= lessDest %>']
             },
             /**
              * When it is time to have a completely compiled application, we can
@@ -320,7 +354,7 @@ module.exports = function(grunt) {
              */
             compile: {
                 dir: '<%= compile_dir %>',
-                src: ['<%= concat.compile_js.dest %>', '<%= vendor_files.css %>', '<%= recess.compile.dest %>']
+                src: ['<%= concat.compile_js.dest %>', '<%= vendor_files.css %>', '<%= lessDest %>']
             }
         },
         /**
@@ -407,7 +441,7 @@ module.exports = function(grunt) {
              */
             less: {
                 files: ['src/**/*.less'],
-                tasks: ['recess:build']
+                tasks: ['less:build']
             },
             /**
              * When a JavaScript unit test file changes, we only want to lint it and
@@ -450,15 +484,12 @@ module.exports = function(grunt) {
     /**
      * The `build` task gets your app ready to run for development and testing.
      */
-     /*
-    grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'recess:build', 'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets', 'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig', 'karma:continuous']);
-    */
-    grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'recess:build', 'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets', 'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig']);
+    grunt.registerTask('build', ['clean', 'html2js', 'jshint', 'coffeelint', 'coffee', 'less:build', 'concat:build_css', 'copy:build_app_assets', 'copy:build_appjs', 'copy:build_vendor_fonts', 'copy:build_vendor_assets', 'copy:build_vendor_js', 'index:build', 'karmaconfig']);
     /**
      * The `compile` task gets your app ready for deployment by concatenating and
      * minifying your code.
      */
-    grunt.registerTask('compile', ['recess:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile']);
+    grunt.registerTask('compile', ['less:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile']);
     /**
      * A utility function to get all app JavaScript sources.
      */

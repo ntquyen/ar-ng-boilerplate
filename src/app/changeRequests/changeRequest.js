@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.changeRequest', ['ui.router', 'angularFileUpload', 'changeRequest'])
+angular.module('contactIntegration.changeRequest', ['ui.router', 'angularFileUpload', 'changeRequest', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,10 +36,10 @@ angular.module('contactIntegration.changeRequest', ['ui.router', 'angularFileUpl
 /**
  * And of course we define a controller for our route.
  */
-.controller('ChangeRequestCtrl', function($scope, $state, $upload, changeRequestApi) {
+.controller('ChangeRequestCtrl', function($scope, $state, $upload, changeRequestApi, appConfig) {
     console.log('contactIntegration.changeRequest.ChangeRequestCtrl');
     // back to previous state
-    if (!App.agencyLocation) {
+    if (!appConfig.agencyLocation) {
         $state.transitionTo('apiInfo');
         return;
     }
@@ -92,8 +92,8 @@ angular.module('contactIntegration.changeRequest', ['ui.router', 'angularFileUpl
     $scope.createNewChangeRequest = function() { 
         $scope.changeRequest = {
             requester: {
-                name: App.name,
-                email: App.email
+                name: appConfig.name,
+                email: appConfig.email
             },
             type: $scope.requestType,
             subject: null,

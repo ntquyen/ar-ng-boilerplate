@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.fileUpload', ['ui.router', 'angularFileUpload', 'fileUpload'])
+angular.module('contactIntegration.fileUpload', ['ui.router', 'angularFileUpload', 'fileUpload', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,11 +36,11 @@ angular.module('contactIntegration.fileUpload', ['ui.router', 'angularFileUpload
 /**
  * And of course we define a controller for our route.
  */
-.controller('FileUploadCtrl', ['$scope', '$state', '$upload', 'fileUploadApi',
-    function($scope, $state, $upload, fileUploadApi) {
+.controller('FileUploadCtrl', ['$scope', '$state', '$upload', 'fileUploadApi', 'appConfig',
+    function($scope, $state, $upload, fileUploadApi, appConfig) {
         console.log('contactIntegration.fileUpload.FileUploadCtrl');
         // back to previous state
-        if (!App.agencyLocation) {
+        if (!appConfig.agencyLocation) {
             $state.transitionTo('apiInfo');
             return;
         }
@@ -51,14 +51,14 @@ angular.module('contactIntegration.fileUpload', ['ui.router', 'angularFileUpload
         $scope.goInstructions = function() {
             $state.transitionTo('dashboard');
         };
-        $scope.agencyLocation = App.agencyLocation;
+        $scope.agencyLocation = appConfig.agencyLocation;
         $scope.step1 = {};
         $scope.step2 = {};
         $scope.importModel = {
-            saveAmsType: App.agencyLocation.saveAmsType,
-            agencyLocationId: App.agencyLocation.agencyLocationId,
-            agencyLocationKey: App.agencyLocation.agencyLocationKey,
-            fileType: App.agencyLocation.exportType
+            saveAmsType: appConfig.agencyLocation.saveAmsType,
+            agencyLocationId: appConfig.agencyLocation.agencyLocationId,
+            agencyLocationKey: appConfig.agencyLocation.agencyLocationKey,
+            fileType: appConfig.agencyLocation.exportType
         };
         setTimeout(function() {
             $scope.goToStep1();

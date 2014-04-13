@@ -1,7 +1,7 @@
-angular.module('fileUpload', []).factory('fileUploadApi', ['$http',
-    function($http) {
+angular.module('fileUpload', ['appConfig']).factory('fileUploadApi', ['$http', 'appConfig',
+    function($http, appConfig) {
         var config = {
-            baseUrl: '/desktopmodules/AgencyRevContactIntegrations/API/FileUploads'
+            baseUrl: appConfig.baseUrl + '/API/FileUploads'
         };
         return {
             // verify

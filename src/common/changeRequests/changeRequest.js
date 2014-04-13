@@ -1,6 +1,6 @@
-angular.module('changeRequest', ['fakeApi']).factory('changeRequestApi', ['$http', 'fakeApiService',
-    function($http, fakeApiService) {
-        var baseUrl = '/desktopmodules/AgencyRevContactIntegrations/API/changeRequests';
+angular.module('changeRequest', ['appConfig']).factory('changeRequestApi', ['$http', 'appConfig',
+    function($http, appConfig) {
+        var baseUrl = appConfig.baseUrl + '/API/changeRequests';
         return {
             // create ZenDesk changeRequest
             create: function(changeRequest) {
@@ -11,10 +11,7 @@ angular.module('changeRequest', ['fakeApi']).factory('changeRequestApi', ['$http
             },
             // get all ZenDesk change requests raised by this user
             getChangeRequests: function() {
-                return fakeApiService.buildFakeResponse([]);
-                /*
                 return $http.get(baseUrl + '/GetChangeRequests');
-                */
             }
         };
     }

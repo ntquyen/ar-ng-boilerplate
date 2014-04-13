@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.dashboard', ['ui.router', 'status'])
+angular.module('contactIntegration.dashboard', ['ui.router', 'status', 'appConfig', 'moonrayLight', 'underscore'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,10 +36,10 @@ angular.module('contactIntegration.dashboard', ['ui.router', 'status'])
 /**
  * And of course we define a controller for our route.
  */
-.controller('DashboardCtrl', function HomeController($scope, $state, statusApi) {
+.controller('DashboardCtrl', function HomeController($scope, $state, statusApi, appConfig, _) {
     console.log('contactIntegration.dashboard.DashboardCtrl');
-    $scope.agencyLocation = App.agencyLocation;
-    if (!App.agencyLocation) {
+    $scope.agencyLocation = appConfig.agencyLocation;
+    if (!appConfig.agencyLocation) {
         $state.transitionTo('apiInfo');
         return;
     }
@@ -48,22 +48,23 @@ angular.module('contactIntegration.dashboard', ['ui.router', 'status'])
     }
     // change another location
     $scope.changeLocation = function() {
-        App.selectAnotherAgencyLocation = true;
-        App.agencyLocation = null;
+        appConfig.selectAnotherAgencyLocation = true;
+        appConfig.agencyLocation = null;
         $state.transitionTo('apiInfo');
     };
-
-    $scope.toggleInformation = function(){
+    $scope.toggleInformation = function() {
         if ($scope.informationMask == $scope.agencyLocation.agencyLocationDesc) {
             $scope.informationMask = $scope.agencyLocation.agencyLocationKey;
         }
     };
-
+    // load status
     $scope.loadStatus = function() {
         $scope.loading = true;
-        statusApi.getStatus(App.agencyLocation.agencyLocationKey).success(function(data) {
+        statusApi.getStatus(appConfig.agencyLocation.agencyLocationKey).success(function(data) {
+            data.lastSyncActivityDays = dateDiffInDays(Date.now(), data.lastSyncActivity);
+            //data.lastSyncActivityDays = 10;
             $scope.status = data;
-            App.status = $scope.status;
+            appConfig.status = $scope.status;
             $scope.loading = false;
         }).error(function(err) {
             console.log(err);
@@ -71,12 +72,23 @@ angular.module('contactIntegration.dashboard', ['ui.router', 'status'])
             $scope.loading = false;
         });
     };
-
-    if(!App.status) {
+    if (!appConfig.status) {
         console.log($scope.status);
         $scope.loadStatus();
     } else {
-        $scope.status = App.status;
+        $scope.status = appConfig.status;
     }
 
+    // a and b are javascript Date objects
+    function dateDiffInDays(a, b) {
+      // Discard the time and time-zone information.
+      if (_.isDate(a) && _.isDate(b)) {
+          var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+          var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+          return Math.floor((utc2 - utc1) / 1000 * 60 * 60 * 24);
+      } else {
+          return null;
+      }
+      
+    }
 });

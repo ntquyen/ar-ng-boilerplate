@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module('contactIntegration.help', ['ui.router', 'topic', 'ngSanitize', 'underscore'])
+angular.module('contactIntegration.help', ['ui.router', 'topic', 'ngSanitize', 'underscore', 'appConfig'])
 /**
  * Each section or module of the site can also have its own routes. AngularJS
  * will handle ensuring they are all available at run-time, but splitting it
@@ -36,10 +36,10 @@ angular.module('contactIntegration.help', ['ui.router', 'topic', 'ngSanitize', '
 /**
  * And of course we define a controller for our route.
  */
-.controller('HelpCtrl', function($scope, $state, $sce, topicApi, _) {
+.controller('HelpCtrl', function($scope, $state, $sce, topicApi, _, appConfig) {
     console.log('contactIntegration.help.HelpCtrl');
     // back to previous state
-    if (!App.agencyLocation) {
+    if (!appConfig.agencyLocation) {
         $state.transitionTo('apiInfo');
         return;
     }
@@ -50,7 +50,7 @@ angular.module('contactIntegration.help', ['ui.router', 'topic', 'ngSanitize', '
     $scope.loading = true;
     $scope.topics = [];
     // find all related topics
-    topicApi.find(App.agencyLocation.exportType).success(function(data) {
+    topicApi.find(appConfig.agencyLocation.exportType).success(function(data) {
         $scope.loading = false;
         if (data.error) {
             $scope.error = data.error;
