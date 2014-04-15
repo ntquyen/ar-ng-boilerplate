@@ -1,4 +1,3 @@
-
 Overview
 ====
 Github repository: <https://github.com/agencyrevolution/ar-ng-boilerplate>
